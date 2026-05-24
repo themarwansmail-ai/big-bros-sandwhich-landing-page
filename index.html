@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Big Bros Sandwhich — heavy-duty street stacks, late-night hungry, biker-approved flavor.">
+  <title>Big Bros Sandwhich | Street Stacks &amp; Late-Night Bites</title>
+
+  <!-- Google Fonts: Bebas Neue (logo/headlines) + Barlow (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Main navigation">
+
+      <!-- Logo: change text below to your restaurant name -->
+      <a href="#home" class="nav__logo">Big Bros <span>Sandwhich</span></a>
+
+      <!-- Desktop & mobile navigation links -->
+      <ul class="nav__menu" id="nav-menu">
+        <li class="nav__item">
+          <a href="#home" class="nav__link nav__link--active">Home</a>
+        </li>
+        <li class="nav__item">
+          <a href="#menu" class="nav__link">Menu</a>
+        </li>
+        <li class="nav__item">
+          <a href="#about" class="nav__link">About</a>
+        </li>
+        <li class="nav__item">
+          <a href="#contact" class="nav__link">Contact</a>
+        </li>
+
+        <!-- Order button shown inside mobile menu -->
+        <li class="nav__item nav__item--mobile-btn">
+          <a href="#order" class="btn btn--primary btn--full">Order Now</a>
+        </li>
+      </ul>
+
+      <!-- Desktop Order Now button -->
+      <a href="#order" class="btn btn--primary nav__order-btn">Order Now</a>
+
+      <!-- Hamburger button (mobile only) -->
+      <button
+        class="nav__toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+    </nav>
+  </header>
+
+  <main>
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="home">
+      <div class="hero__container container">
+
+        <!-- Left column: text content -->
+        <div class="hero__content">
+          <p class="hero__badge">Street stacks · Biker approved</p>
+
+          <h1 class="hero__title">Heavy-Duty Hand-Stacked Sandwiches</h1>
+
+          <p class="hero__description">
+            Big portions, loud flavor, zero attitude. Smoked meats, melted cheese, and
+            sauce dripping off the roll — served hot from the window 'til the street goes quiet.
+          </p>
+
+          <div class="hero__buttons">
+            <a href="#order" class="btn btn--primary btn--lg">Order Now</a>
+            <a href="#menu" class="btn btn--outline btn--lg">View Menu</a>
+          </div>
+
+          <!-- Optional trust line — easy to remove if not needed -->
+          <p class="hero__note">
+            <span class="hero__note-dot" aria-hidden="true"></span>
+            Open late · 11am – 11pm · Pickup at the window
+          </p>
+        </div>
+
+        <!-- Right column: hero image -->
+        <div class="hero__visual">
+          <div class="hero__image-wrapper">
+            <!--
+              Replace src with your own image path, e.g. images/hero-sandwich.jpg
+              Current image: free stock photo from Unsplash
+            -->
+            <img
+              src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&q=80"
+              alt="A stacked gourmet sandwich with fresh ingredients"
+              class="hero__image"
+              width="640"
+              height="640"
+              loading="eager"
+            >
+            <div class="hero__image-glow" aria-hidden="true"></div>
+          </div>
+
+          <!-- Floating card — decorative, edit text in HTML -->
+          <div class="hero__card">
+            <span class="hero__card-icon" aria-hidden="true">🏍️</span>
+            <div>
+              <p class="hero__card-title">Tonight's Ride</p>
+              <p class="hero__card-text">Smoky BBQ Melt</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== MENU SECTION ========== -->
+    <section class="menu" id="menu" aria-labelledby="menu-title">
+      <div class="container">
+
+        <!-- Section heading — reuse this pattern for About & Contact later -->
+        <header class="section-header">
+          <p class="section-header__badge">Our Menu</p>
+          <h2 class="section-header__title" id="menu-title">Built for Big Appetites</h2>
+          <p class="section-header__text">
+            Street portions on sourdough, brioche, or a toasted roll. Sauce on the side —
+            or extra dirty, your call.
+          </p>
+        </header>
+
+        <!-- Category filters — data-filter must match data-category on cards -->
+        <div class="menu__filters" role="tablist" aria-label="Menu categories">
+          <button class="menu__filter menu__filter--active" type="button" data-filter="all" role="tab" aria-selected="true">
+            All
+          </button>
+          <button class="menu__filter" type="button" data-filter="sandwiches" role="tab" aria-selected="false">
+            Sandwiches
+          </button>
+          <button class="menu__filter" type="button" data-filter="melts" role="tab" aria-selected="false">
+            Melts
+          </button>
+          <button class="menu__filter" type="button" data-filter="sides" role="tab" aria-selected="false">
+            Sides
+          </button>
+          <button class="menu__filter" type="button" data-filter="drinks" role="tab" aria-selected="false">
+            Drinks
+          </button>
+        </div>
+
+        <!-- Menu cards grid — duplicate a <article> block to add more items -->
+        <div class="menu__grid" id="menu-grid">
+
+          <!-- Sandwich -->
+          <article class="menu-card" data-category="sandwiches">
+            <div class="menu-card__image-wrap">
+              <img
+                src="club sandwhich.jpg"
+                alt="Classic club sandwich with turkey and bacon"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+              <span class="menu-card__tag">Popular</span>
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Classic Club</h3>
+                <span class="menu-card__price">$12.50</span>
+              </div>
+              <p class="menu-card__desc">Turkey, bacon, lettuce, tomato, and mayo on toasted sourdough.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="sandwiches">
+            <div class="menu-card__image-wrap">
+              <img
+                src="bbq melt sandwhich.jpg"
+                alt="Smoky BBQ melt sandwich"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+              <span class="menu-card__tag menu-card__tag--special">Chef's Pick</span>
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Smoky BBQ Melt</h3>
+                <span class="menu-card__price">$13.50</span>
+              </div>
+              <p class="menu-card__desc">Pulled pork, cheddar, crispy onions, and tangy BBQ on brioche.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="sandwiches">
+            <div class="menu-card__image-wrap">
+              <img
+                src="salad sandwhich.jpg"
+                alt="Garden veggie sandwich with fresh greens"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+              <span class="menu-card__tag menu-card__tag--veg">Veggie</span>
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Garden Veggie</h3>
+                <span class="menu-card__price">$11.00</span>
+              </div>
+              <p class="menu-card__desc">Roasted peppers, avocado, sprouts, and herb aioli on multigrain.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="sandwiches">
+            <div class="menu-card__image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600&q=80"
+                alt="Hot honey chicken sandwich"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+              <span class="menu-card__tag menu-card__tag--spicy">Spicy</span>
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Hot Honey Chicken</h3>
+                <span class="menu-card__price">$14.00</span>
+              </div>
+              <p class="menu-card__desc">Crispy chicken, pickles, coleslaw, and hot honey glaze on a potato roll.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <!-- Melts -->
+          <article class="menu-card" data-category="melts">
+            <div class="menu-card__image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&q=80"
+                alt="Triple cheese melt sandwich"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Triple Cheese Melt</h3>
+                <span class="menu-card__price">$10.50</span>
+              </div>
+              <p class="menu-card__desc">Cheddar, Swiss, and American pressed on buttery grilled sourdough.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="melts">
+            <div class="menu-card__image-wrap">
+              <img
+                src="Mushroom Sandwhich.jpg"
+                alt="Mushroom swiss melt sandwich"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Mushroom Swiss</h3>
+                <span class="menu-card__price">$11.50</span>
+              </div>
+              <p class="menu-card__desc">Sautéed mushrooms, Swiss cheese, and garlic butter on rye.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <!-- Sides -->
+          <article class="menu-card" data-category="sides">
+            <div class="menu-card__image-wrap">
+              <img
+                src="Street fries.jpg"
+                alt="Crispy street fries in a paper tray"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Street Fries</h3>
+                <span class="menu-card__price">$5.00</span>
+              </div>
+              <p class="menu-card__desc">Shoestring fries with paprika salt and chipotle mayo dip.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="sides">
+            <div class="menu-card__image-wrap">
+              <img
+                src="House Pickle.jpg"
+                alt="Jar of house pickles"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">House Pickles</h3>
+                <span class="menu-card__price">$3.50</span>
+              </div>
+              <p class="menu-card__desc">Dill and spicy pickles brined in-house. Perfect crunch on the side.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <!-- Drinks -->
+          <article class="menu-card" data-category="drinks">
+            <div class="menu-card__image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600&q=80"
+                alt="Fresh lemonade in a glass"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">House Lemonade</h3>
+                <span class="menu-card__price">$4.00</span>
+              </div>
+              <p class="menu-card__desc">Fresh-squeezed lemons with a hint of mint. Sweet or less sweet.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+          <article class="menu-card" data-category="drinks">
+            <div class="menu-card__image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80"
+                alt="Iced coffee in a glass"
+                class="menu-card__image"
+                width="400"
+                height="300"
+                loading="lazy"
+              >
+            </div>
+            <div class="menu-card__body">
+              <div class="menu-card__top">
+                <h3 class="menu-card__name">Cold Brew</h3>
+                <span class="menu-card__price">$4.50</span>
+              </div>
+              <p class="menu-card__desc">Slow-steeped coffee served over ice. Add oat milk for $0.50.</p>
+              <a href="#order" class="menu-card__btn">Add to order</a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Quick link down to the order form -->
+        <div class="menu__cta">
+          <div class="menu__cta-content">
+            <h3 class="menu__cta-title">Hungry? Don't wait.</h3>
+            <p class="menu__cta-text">Roll up, order online, grab it hot from the window.</p>
+          </div>
+          <a href="#order" class="btn btn--primary btn--lg">Place Your Order</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== ORDER NOW SECTION ========== -->
+    <section class="order" id="order" aria-labelledby="order-title">
+      <div class="container">
+
+        <header class="section-header">
+          <p class="section-header__badge">Order Now</p>
+          <h2 class="section-header__title" id="order-title">Order Like a Regular</h2>
+          <p class="section-header__text">
+            Pick your stacks from the menu, choose pickup or delivery, and we'll fire it up.
+            Delivery within 3 miles.
+          </p>
+        </header>
+
+        <div class="order__layout">
+
+          <!-- Left: how to order & perks -->
+          <div class="order__info">
+            <h3 class="order__info-title">How it works</h3>
+            <ol class="order__steps">
+              <li class="order__step">
+                <span class="order__step-num">1</span>
+                <p>Choose pickup or delivery and pick a time.</p>
+              </li>
+              <li class="order__step">
+                <span class="order__step-num">2</span>
+                <p>Pick items from the same menu dropdowns below.</p>
+              </li>
+              <li class="order__step">
+                <span class="order__step-num">3</span>
+                <p>We confirm by text and have it ready in about 15 minutes.</p>
+              </li>
+            </ol>
+
+            <ul class="order__perks">
+              <li>Free pickup at the window</li>
+              <li>Delivery from $2.99 (3 mi radius)</li>
+              <li>Pay when you pick up or on delivery</li>
+            </ul>
+          </div>
+
+          <!-- Right: order form — edit field labels in HTML -->
+          <form class="order__form form" id="order-form" novalidate>
+            <fieldset class="order__type">
+              <legend class="form__legend">Order type</legend>
+              <div class="order__type-options">
+                <label class="order__type-option">
+                  <input type="radio" name="order-type" value="pickup" checked>
+                  <span class="order__type-card">
+                    <span class="order__type-icon" aria-hidden="true">🥡</span>
+                    <span class="order__type-label">Pickup</span>
+                  </span>
+                </label>
+                <label class="order__type-option">
+                  <input type="radio" name="order-type" value="delivery">
+                  <span class="order__type-card">
+                    <span class="order__type-icon" aria-hidden="true">🛵</span>
+                    <span class="order__type-label">Delivery</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="form__row">
+              <div class="form__group">
+                <label for="order-name" class="form__label">Your name</label>
+                <input type="text" id="order-name" name="name" class="form__input" placeholder="Jane Smith" required>
+              </div>
+              <div class="form__group">
+                <label for="order-phone" class="form__label">Phone number</label>
+                <input type="tel" id="order-phone" name="phone" class="form__input" placeholder="(555) 123-4567" required>
+              </div>
+            </div>
+
+            <div class="form__group form__group--hidden" id="order-address-group">
+              <label for="order-address" class="form__label">Delivery address</label>
+              <input type="text" id="order-address" name="address" class="form__input" placeholder="123 Main St, Apt 4">
+            </div>
+
+            <div class="form__row">
+              <div class="form__group">
+                <label for="order-time" class="form__label">Pickup / delivery time</label>
+                <select id="order-time" name="time" class="form__input form__select" required>
+                  <option value="">Select a time</option>
+                  <option value="asap">ASAP (~15 min)</option>
+                  <option value="30">In 30 minutes</option>
+                  <option value="60">In 1 hour</option>
+                  <option value="later">Schedule for later</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Menu item dropdowns — options are filled from the Menu section in script.js -->
+            <div class="form__group">
+              <span class="form__label" id="order-items-label">Your order</span>
+              <p class="order__items-hint">Select items from our menu. Use + Add another item for more.</p>
+
+              <div class="order__items" id="order-items-list" aria-labelledby="order-items-label">
+                <!-- First row (more rows added with the button below) -->
+                <div class="order__item-row">
+                  <select class="form__input form__select order__item-select" name="menu-item[]" required aria-label="Menu item">
+                    <option value="">Choose an item...</option>
+                  </select>
+                  <select class="form__input form__select order__item-qty" name="menu-qty[]" aria-label="Quantity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <button type="button" class="order__item-remove" aria-label="Remove item" hidden>&times;</button>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn--outline order__add-btn" id="order-add-item">
+                + Add another item
+              </button>
+
+              <p class="order__total">
+                Estimated total: <strong id="order-total">$0.00</strong>
+              </p>
+            </div>
+
+            <div class="form__group">
+              <label for="order-notes" class="form__label">Special requests <span class="form__optional">(optional)</span></label>
+              <input type="text" id="order-notes" name="notes" class="form__input" placeholder="No onions, extra sauce, etc.">
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg btn--full">Submit Order</button>
+            <p class="form__message" id="order-message" role="status" aria-live="polite"></p>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+
+        <header class="section-header">
+          <p class="section-header__badge">Contact</p>
+          <h2 class="section-header__title" id="contact-title">Find the Crew</h2>
+          <p class="section-header__text">
+            Catering, feedback, or just wanna talk sandwiches? Hit us up — Big Bros always answers.
+          </p>
+        </header>
+
+        <div class="contact__layout">
+
+          <!-- Contact details -->
+          <div class="contact__details">
+            <article class="contact__card">
+              <span class="contact__icon" aria-hidden="true">📍</span>
+              <h3 class="contact__card-title">Visit us</h3>
+              <p class="contact__card-text">
+                142 Market Street<br>
+                Downtown, Your City 10001
+              </p>
+              <a href="https://maps.google.com" class="contact__link" target="_blank" rel="noopener noreferrer">
+                Get directions
+              </a>
+            </article>
+
+            <article class="contact__card">
+              <span class="contact__icon" aria-hidden="true">🕐</span>
+              <h3 class="contact__card-title">Hours</h3>
+              <p class="contact__card-text">
+                Mon – Fri: 11am – 9pm<br>
+                Sat – Sun: 10am – 10pm
+              </p>
+            </article>
+
+            <article class="contact__card">
+              <span class="contact__icon" aria-hidden="true">📞</span>
+              <h3 class="contact__card-title">Call or email</h3>
+              <p class="contact__card-text">
+                <a href="tel:+15551234567" class="contact__link">(555) 123-4567</a><br>
+                <a href="mailto:hello@bigbrossandwhich.com" class="contact__link">hello@bigbrossandwhich.com</a>
+              </p>
+            </article>
+
+            <!-- Map placeholder — replace iframe src with your Google Maps embed URL -->
+            <div class="contact__map">
+              <iframe
+                title="Big Bros Sandwhich location on map"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343!2d-74.004258!3d40.740162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ0JzI0LjYiTiA3NMKwMDAnMTUuMyJX!5e0!3m2!1sen!2sus!4v1"
+                width="600"
+                height="280"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+
+          <!-- Contact form -->
+          <form class="contact__form form" id="contact-form" novalidate>
+            <h3 class="contact__form-title">Send us a message</h3>
+
+            <div class="form__row">
+              <div class="form__group">
+                <label for="contact-name" class="form__label">Name</label>
+                <input type="text" id="contact-name" name="name" class="form__input" placeholder="Your name" required>
+              </div>
+              <div class="form__group">
+                <label for="contact-email" class="form__label">Email</label>
+                <input type="email" id="contact-email" name="email" class="form__input" placeholder="you@email.com" required>
+              </div>
+            </div>
+
+            <div class="form__group">
+              <label for="contact-subject" class="form__label">Subject</label>
+              <select id="contact-subject" name="subject" class="form__input form__select" required>
+                <option value="">Choose a topic</option>
+                <option value="general">General question</option>
+                <option value="catering">Catering / events</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form__group">
+              <label for="contact-message" class="form__label">Message</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                class="form__input form__textarea"
+                rows="5"
+                placeholder="How can we help?"
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg btn--full">Send Message</button>
+            <p class="form__message" id="contact-form-message" role="status" aria-live="polite"></p>
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#home" class="footer__logo">Big Bros <span>Sandwhich</span></a>
+      <p class="footer__copy">&copy; 2026 Big Bros Sandwhich. Ride hungry.</p>
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <a href="#menu">Menu</a>
+        <a href="#order">Order</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

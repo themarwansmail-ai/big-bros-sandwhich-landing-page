@@ -1,0 +1,12 @@
+---
+cwd: "C:\\Users\\FUNNY"
+command: "cd \"C:\\Users\\FUNNY\\.cursor\\projects\\empty-window\" && python -m http.server 8765"
+started_at: 2026-05-23T13:13:27.274Z
+running_for_ms: 14       
+---
+
+---
+error: "Sandbox policy 'workspace_readwrite' is not supported on this system. Ensure the sandbox helper binary is available, or use 'insecure_none'. Reason: Windows sandbox helper only provides network proxy, not filesystem isolation"
+elapsed_ms: 16
+ended_at: 2026-05-23T13:13:27.290Z
+---
