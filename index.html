@@ -61,6 +61,8 @@
       </button>
 
     </nav>
+    <!-- Mobile menu backdrop — fades in behind drawer -->
+    <div class="nav__backdrop" id="nav-backdrop" aria-hidden="true"></div>
   </header>
 
   <main>
@@ -70,29 +72,32 @@
 
         <!-- Left column: text content -->
         <div class="hero__content">
-          <p class="hero__badge">Street stacks · Biker approved</p>
+          <p class="hero__badge reveal">Street stacks · Biker approved</p>
 
-          <h1 class="hero__title">Heavy-Duty Hand-Stacked Sandwiches</h1>
+          <h1 class="hero__title reveal reveal--delay-1">
+            <span class="hero__title-line">Heavy-Duty</span>
+            <span class="hero__title-line hero__title-line--accent">Hand-Stacked</span>
+            <span class="hero__title-line">Sandwiches</span>
+          </h1>
 
-          <p class="hero__description">
+          <p class="hero__description reveal reveal--delay-2">
             Big portions, loud flavor, zero attitude. Smoked meats, melted cheese, and
             sauce dripping off the roll — served hot from the window 'til the street goes quiet.
           </p>
 
-          <div class="hero__buttons">
+          <div class="hero__buttons reveal reveal--delay-3">
             <a href="#order" class="btn btn--primary btn--lg">Order Now</a>
             <a href="#menu" class="btn btn--outline btn--lg">View Menu</a>
           </div>
 
-          <!-- Optional trust line — easy to remove if not needed -->
-          <p class="hero__note">
+          <p class="hero__note reveal reveal--delay-4">
             <span class="hero__note-dot" aria-hidden="true"></span>
             Open late · 11am – 11pm · Pickup at the window
           </p>
         </div>
 
         <!-- Right column: hero image -->
-        <div class="hero__visual">
+        <div class="hero__visual reveal reveal--delay-2">
           <div class="hero__image-wrapper">
             <!--
               Replace src with your own image path, e.g. images/hero-sandwich.jpg
@@ -122,12 +127,14 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"></div>
+
     <!-- ========== MENU SECTION ========== -->
     <section class="menu" id="menu" aria-labelledby="menu-title">
       <div class="container">
 
         <!-- Section heading — reuse this pattern for About & Contact later -->
-        <header class="section-header">
+        <header class="section-header reveal">
           <p class="section-header__badge">Our Menu</p>
           <h2 class="section-header__title" id="menu-title">Built for Big Appetites</h2>
           <p class="section-header__text">
@@ -390,11 +397,13 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"></div>
+
     <!-- ========== ORDER NOW SECTION ========== -->
     <section class="order" id="order" aria-labelledby="order-title">
       <div class="container">
 
-        <header class="section-header">
+        <header class="section-header reveal">
           <p class="section-header__badge">Order Now</p>
           <h2 class="section-header__title" id="order-title">Order Like a Regular</h2>
           <p class="section-header__text">
@@ -528,11 +537,13 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"></div>
+
     <!-- ========== CONTACT SECTION ========== -->
     <section class="contact" id="contact" aria-labelledby="contact-title">
       <div class="container">
 
-        <header class="section-header">
+        <header class="section-header reveal">
           <p class="section-header__badge">Contact</p>
           <h2 class="section-header__title" id="contact-title">Find the Crew</h2>
           <p class="section-header__text">

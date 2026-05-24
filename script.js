@@ -6,6 +6,7 @@
 /* ---------- Mobile hamburger menu ---------- */
 const navToggle = document.getElementById("nav-toggle");
 const navMenu = document.getElementById("nav-menu");
+const navBackdrop = document.getElementById("nav-backdrop");
 const navLinks = document.querySelectorAll(".nav__link");
 const header = document.getElementById("header");
 
@@ -14,28 +15,36 @@ if (navToggle && navMenu) {
   /**
    * Opens or closes the mobile navigation menu
    */
-  function toggleMenu() {
-    const isOpen = navMenu.classList.toggle("nav__menu--open");
+  function setMenuOpen(isOpen) {
+    navMenu.classList.toggle("nav__menu--open", isOpen);
     navToggle.classList.toggle("nav__toggle--active", isOpen);
+    navBackdrop?.classList.toggle("nav__backdrop--visible", isOpen);
     navToggle.setAttribute("aria-expanded", String(isOpen));
     navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
     document.body.style.overflow = isOpen ? "hidden" : "";
+  }
+
+  function toggleMenu() {
+    setMenuOpen(!navMenu.classList.contains("nav__menu--open"));
   }
 
   /**
    * Closes the menu (used when a link is clicked)
    */
   function closeMenu() {
-    navMenu.classList.remove("nav__menu--open");
-    navToggle.classList.remove("nav__toggle--active");
-    navToggle.setAttribute("aria-expanded", "false");
-    navToggle.setAttribute("aria-label", "Open menu");
-    document.body.style.overflow = "";
+    setMenuOpen(false);
   }
 
   navToggle.addEventListener("click", toggleMenu);
 
+  navBackdrop?.addEventListener("click", closeMenu);
+
   navLinks.forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  /* Close mobile menu when Order Now is tapped */
+  document.querySelectorAll('a[href="#order"]').forEach((link) => {
     link.addEventListener("click", closeMenu);
   });
 
@@ -80,6 +89,39 @@ function setActiveLink() {
 window.addEventListener("scroll", setActiveLink);
 setActiveLink();
 
+/* ---------- Scroll reveal — fade sections in as you scroll ---------- */
+const revealElements = document.querySelectorAll(
+  ".reveal, .menu-card, .section-header"
+);
+
+if (revealElements.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  revealElements.forEach((el) => {
+    if (!el.classList.contains("reveal")) {
+      el.classList.add("reveal");
+    }
+    revealObserver.observe(el);
+  });
+} else {
+  revealElements.forEach((el) => el.classList.add("is-visible"));
+}
+
+/* Hero content is above the fold — show immediately */
+document.querySelectorAll("#home .reveal").forEach((el) => {
+  el.classList.add("is-visible");
+});
+
 /* ---------- Menu category filters ---------- */
 const menuFilters = document.querySelectorAll(".menu__filter");
 const menuCards = document.querySelectorAll(".menu-card");
@@ -101,6 +143,9 @@ if (menuFilters.length && menuCards.length) {
         const cardCategory = card.getAttribute("data-category");
         const showCard = category === "all" || cardCategory === category;
         card.classList.toggle("menu-card--hidden", !showCard);
+        if (showCard) {
+          card.classList.add("is-visible");
+        }
       });
     });
   });
