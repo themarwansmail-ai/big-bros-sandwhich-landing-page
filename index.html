@@ -430,8 +430,11 @@
             </ul>
           </div>
 
-          <!-- Right: order form — edit field labels in HTML -->
-          <form class="order__form form" id="order-form" novalidate>
+          <!-- Right: order form — submits to Formspree (see formspree-config.js) -->
+          <form class="order__form form" id="order-form" method="POST" novalidate>
+            <input type="hidden" name="_subject" value="New order — Big Bros Sandwhich">
+            <input type="hidden" name="order_summary" id="order-summary-field" value="">
+            <input type="hidden" name="estimated_total" id="order-total-field" value="">
             <fieldset class="order__type">
               <legend class="form__legend">Order type</legend>
               <div class="order__type-options">
@@ -489,10 +492,10 @@
               <div class="order__items" id="order-items-list" aria-labelledby="order-items-label">
                 <!-- First row (more rows added with the button below) -->
                 <div class="order__item-row">
-                  <select class="form__input form__select order__item-select" name="menu-item[]" required aria-label="Menu item">
+                  <select class="form__input form__select order__item-select" aria-label="Menu item" data-order-item-select required>
                     <option value="">Choose an item...</option>
                   </select>
-                  <select class="form__input form__select order__item-qty" name="menu-qty[]" aria-label="Quantity">
+                  <select class="form__input form__select order__item-qty" aria-label="Quantity" data-order-qty-select>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -586,8 +589,9 @@
             </div>
           </div>
 
-          <!-- Contact form -->
-          <form class="contact__form form" id="contact-form" novalidate>
+          <!-- Contact form — submits to Formspree (see formspree-config.js) -->
+          <form class="contact__form form" id="contact-form" method="POST" novalidate>
+            <input type="hidden" name="_subject" value="New message — Big Bros Sandwhich">
             <h3 class="contact__form-title">Send us a message</h3>
 
             <div class="form__row">
@@ -646,6 +650,7 @@
     </div>
   </footer>
 
+  <script src="formspree-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

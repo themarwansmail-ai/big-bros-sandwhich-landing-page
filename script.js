@@ -220,17 +220,13 @@ function updateOrderItemRows() {
   updateOrderTotal();
 }
 
-/** Add a new menu item + quantity row */
-function addOrderItemRow(menuItems, selectedId = "") {
-  if (!orderItemsList) return;
-
-  const row = document.createElement("div");
-  row.className = "order__item-row";
-  row.innerHTML = `
-    <select class="form__input form__select order__item-select" name="menu-item[]" required aria-label="Menu item">
-      ${buildMenuOptionsHTML(menuItems)}
+/** HTML for one order item row (menu dropdown + quantity) */
+function createOrderItemRowHTML(menuOptionsHTML) {
+  return `
+    <select class="form__input form__select order__item-select" aria-label="Menu item" data-order-item-select required>
+      ${menuOptionsHTML}
     </select>
-    <select class="form__input form__select order__item-qty" name="menu-qty[]" aria-label="Quantity">
+    <select class="form__input form__select order__item-qty" aria-label="Quantity" data-order-qty-select>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -239,17 +235,30 @@ function addOrderItemRow(menuItems, selectedId = "") {
     </select>
     <button type="button" class="order__item-remove" aria-label="Remove item">&times;</button>
   `;
+}
+
+/** Wire events on a new order item row */
+function bindOrderItemRow(row) {
+  row.querySelector(".order__item-select")?.addEventListener("change", updateOrderTotal);
+  row.querySelector(".order__item-qty")?.addEventListener("change", updateOrderTotal);
+  row.querySelector(".order__item-remove")?.addEventListener("click", () => {
+    row.remove();
+    updateOrderItemRows();
+  });
+}
+
+/** Add a new menu item + quantity row */
+function addOrderItemRow(menuItems, selectedId = "") {
+  if (!orderItemsList) return;
+
+  const row = document.createElement("div");
+  row.className = "order__item-row";
+  row.innerHTML = createOrderItemRowHTML(buildMenuOptionsHTML(menuItems));
 
   const select = row.querySelector(".order__item-select");
   fillItemSelect(select, menuItems, selectedId);
 
-  select.addEventListener("change", updateOrderTotal);
-  row.querySelector(".order__item-qty").addEventListener("change", updateOrderTotal);
-  row.querySelector(".order__item-remove").addEventListener("click", () => {
-    row.remove();
-    updateOrderItemRows();
-  });
-
+  bindOrderItemRow(row);
   orderItemsList.appendChild(row);
   updateOrderItemRows();
 }
@@ -340,34 +349,91 @@ function resetOrderItems() {
 
   const row = document.createElement("div");
   row.className = "order__item-row";
-  row.innerHTML = `
-    <select class="form__input form__select order__item-select" name="menu-item[]" required aria-label="Menu item">
-      ${buildMenuOptionsHTML(menuItems)}
-    </select>
-    <select class="form__input form__select order__item-qty" name="menu-qty[]" aria-label="Quantity">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <button type="button" class="order__item-remove" aria-label="Remove item" hidden>&times;</button>
-  `;
+  row.innerHTML = createOrderItemRowHTML(buildMenuOptionsHTML(menuItems));
 
-  row.querySelector(".order__item-select").addEventListener("change", updateOrderTotal);
-  row.querySelector(".order__item-qty").addEventListener("change", updateOrderTotal);
-  row.querySelector(".order__item-remove").addEventListener("click", () => {
-    row.remove();
-    updateOrderItemRows();
-  });
-
+  bindOrderItemRow(row);
   orderItemsList.appendChild(row);
   updateOrderItemRows();
 }
 
-/* ---------- Order form submit (demo — no real backend) ---------- */
+/* ---------- Formspree: send forms to your email ---------- */
+function getFormspreeId(configKey) {
+  const config = window.FORMSPREE_CONFIG || {};
+  const id = config[configKey];
+  if (!id || String(id).startsWith("YOUR_")) return null;
+  return id;
+}
+
+async function submitToFormspree(form, configKey, messageEl, successText, afterSuccess) {
+  const formId = getFormspreeId(configKey);
+
+  if (!formId) {
+    messageEl.textContent = "Add your Formspree form ID in formspree-config.js";
+    messageEl.className = "form__message form__message--error";
+    return;
+  }
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalLabel = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
+
+  try {
+    const response = await fetch(`https://formspree.io/f/${formId}`, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: new FormData(form),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (response.ok) {
+      messageEl.textContent = successText;
+      messageEl.className = "form__message form__message--success";
+      form.reset();
+      if (afterSuccess) afterSuccess();
+      return;
+    }
+
+    throw new Error(data.error || "Could not send. Please try again.");
+  } catch (error) {
+    messageEl.textContent = error.message || "Could not send. Please try again.";
+    messageEl.className = "form__message form__message--error";
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalLabel;
+  }
+}
+
+/** Build readable order lines for the Formspree email */
+function buildOrderSummaryText() {
+  if (!orderItemsList) return "";
+
+  const lines = [];
+  orderItemsList.querySelectorAll(".order__item-row").forEach((row) => {
+    const select = row.querySelector(".order__item-select");
+    const qty = row.querySelector(".order__item-qty");
+
+    if (select?.value) {
+      lines.push(`${qty?.value || 1}x ${select.selectedOptions[0].textContent}`);
+    }
+  });
+
+  return lines.join("\n");
+}
+
+/** Copy dropdown order into hidden fields before submit */
+function syncOrderHiddenFields() {
+  const summaryField = document.getElementById("order-summary-field");
+  const totalField = document.getElementById("order-total-field");
+
+  if (summaryField) summaryField.value = buildOrderSummaryText();
+  if (totalField && orderTotalEl) totalField.value = orderTotalEl.textContent;
+}
+
+/* ---------- Order form submit → Formspree ---------- */
 if (orderForm && orderMessage) {
-  orderForm.addEventListener("submit", (e) => {
+  orderForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const hasItem = [...orderItemsList.querySelectorAll(".order__item-select")].some(
@@ -385,20 +451,27 @@ if (orderForm && orderMessage) {
       return;
     }
 
-    orderMessage.textContent = "Thanks! Your order was received. We'll text you shortly to confirm.";
-    orderMessage.className = "form__message form__message--success";
-    orderForm.reset();
-    resetOrderItems();
-    toggleDeliveryAddress();
+    syncOrderHiddenFields();
+
+    await submitToFormspree(
+      orderForm,
+      "order",
+      orderMessage,
+      "Thanks! Your order was received. We'll text you shortly to confirm.",
+      () => {
+        resetOrderItems();
+        toggleDeliveryAddress();
+      }
+    );
   });
 }
 
-/* ---------- Contact form submit (demo — no real backend) ---------- */
+/* ---------- Contact form submit → Formspree ---------- */
 const contactForm = document.getElementById("contact-form");
 const contactMessageEl = document.getElementById("contact-form-message");
 
 if (contactForm && contactMessageEl) {
-  contactForm.addEventListener("submit", (e) => {
+  contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     if (!contactForm.checkValidity()) {
@@ -406,8 +479,11 @@ if (contactForm && contactMessageEl) {
       return;
     }
 
-    contactMessageEl.textContent = "Message sent! We'll get back to you within 24 hours.";
-    contactMessageEl.className = "form__message form__message--success";
-    contactForm.reset();
+    await submitToFormspree(
+      contactForm,
+      "contact",
+      contactMessageEl,
+      "Message sent! We'll get back to you within 24 hours."
+    );
   });
 }
