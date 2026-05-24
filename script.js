@@ -184,7 +184,7 @@ function getMenuItemsFromPage() {
 
     const name = nameEl.textContent.trim();
     const priceText = priceEl.textContent.trim();
-    const price = parseFloat(priceText.replace(/[^0-9.]/g, "")) || 0;
+    const price = parseFloat(priceText.replace(/[^0-9]/g, "")) || 0;
     const category = card.getAttribute("data-category") || "other";
     const id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
@@ -248,7 +248,7 @@ function updateOrderTotal() {
     }
   });
 
-  orderTotalEl.textContent = `$${total.toFixed(2)}`;
+  orderTotalEl.textContent = `Rp ${total.toLocaleString("id-ID")}`;
 }
 
 /** Show remove button only when there is more than one row */
