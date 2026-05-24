@@ -240,7 +240,8 @@ function updateOrderTotal() {
     const select = row.querySelector(".order__item-select");
     const qty = row.querySelector(".order__item-qty");
     const option = select?.selectedOptions[0];
-    const price = parseFloat(option?.getAttribute("data-price") || "0");
+
+    const price = parseInt(option?.getAttribute("data-price") || "0", 10);
     const count = parseInt(qty?.value || "1", 10);
 
     if (select?.value && price) {
