@@ -1,0 +1,26 @@
+---
+pid: 3796
+cwd: |
+  C:\Users\FUNNY
+---
+PS C:\Users\FUNNY> cd .cursor
+PS C:\Users\FUNNY\.cursor> cd projects
+PS C:\Users\FUNNY\.cursor\projects> cd empty-window
+PS C:\Users\FUNNY\.cursor\projects\empty-window> dir
+
+
+    Directory: C:\Users\FUNNY\.cursor\projects\empty-window
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         5/23/2026   8:12 PM                agent-transcripts
+d-----         5/20/2026  10:09 PM                canvases
+d-----         5/23/2026   8:11 PM                mcps
+d-----         5/23/2026   8:13 PM                terminals
+-a----         5/23/2026   8:12 PM           4512 index.html
+-a----         5/23/2026   8:13 PM           2620 script.js
+-a----         5/23/2026   8:13 PM          11610 style.css
+
+
+PS C:\Users\FUNNY\.cursor\projects\empty-window> 
